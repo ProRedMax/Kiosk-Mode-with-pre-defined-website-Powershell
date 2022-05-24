@@ -1,14 +1,14 @@
-﻿$user = "ExamX"
+$user = "ExamX"
 $userDesc = "ExamX exam account with assigned Access"
 $website = "examx.at"
 New-LocalUser -Name $user -NoPassword -AccountNeverExpires -UserMayNotChangePassword -Description $userDesc | Set-LocalUser -PasswordNeverExpires $true
 Add-LocalGroupMember -SID S-1-5-32-545 -Member $user
 Set-AssignedAccess -UserName $user -AppUserModelId Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge 
-$examxSid = (Get-LocalUser -Name $user).SID.Value
+$Sid = (Get-LocalUser -Name $user).SID.Value
 
-New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\" -Name $examxSid
-New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\$examxSid" -Name "Browser"
-$regpath = "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\$examxSid\Browser"
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\" -Name $Sid
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\$Sid" -Name "Browser"
+$regpath = "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\$Sid\Browser"
 New-ItemProperty -Path $regpath -PropertyType "DWord" -Name "ConfigureHomeButton" -Value 2
 New-ItemProperty -Path $regpath -PropertyType "DWord" -Name "ConfigureHomeButton_ProviderSet" -Value 1
 New-ItemProperty -Path $regpath -PropertyType "String" -Name "ConfigureHomeButton_WinningProvider" -Value "476830E9-5AE5-4794-A472-DF53C27AC1BC"
@@ -32,10 +32,10 @@ New-ItemProperty -Path $regpath -PropertyType "String" -Name "SetNewTabPageURL_W
 #Create a new settings provider
 New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\Providers\" -Name "476830E9-5AE5-4794-A472-DF53C27AC1BC"
 New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\Providers\476830E9-5AE5-4794-A472-DF53C27AC1BC\" -Name "default"
-New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\Providers\476830E9-5AE5-4794-A472-DF53C27AC1BC\default\" -Name $examxSid
-New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\Providers\476830E9-5AE5-4794-A472-DF53C27AC1BC\default\$examxSid\" -Name "Browser"
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\Providers\476830E9-5AE5-4794-A472-DF53C27AC1BC\default\" -Name $Sid
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\Providers\476830E9-5AE5-4794-A472-DF53C27AC1BC\default\$Sid\" -Name "Browser"
 
-$regpath = "HKLM:\SOFTWARE\Microsoft\PolicyManager\Providers\476830E9-5AE5-4794-A472-DF53C27AC1BC\default\$examxSid\Browser"
+$regpath = "HKLM:\SOFTWARE\Microsoft\PolicyManager\Providers\476830E9-5AE5-4794-A472-DF53C27AC1BC\default\$Sid\Browser"
 New-ItemProperty -Path $regpath -PropertyType "DWord" -Name "ConfigureHomeButton" -Value 2
 New-ItemProperty -Path $regpath -PropertyType "DWord" -Name "ConfigureHomeButton_LastWrite" -Value 1
 New-ItemProperty -Path $regpath -PropertyType "DWord" -Name "ConfigureKioskMode" -Value 0
