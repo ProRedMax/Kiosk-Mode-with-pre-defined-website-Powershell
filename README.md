@@ -6,7 +6,7 @@ I never found any suitable solution for me, this is why I reverse engineered the
 
 ## Note
 
-As for now, this only workd for Windows 10. I will update the script in the future to support Windows 11
+As for now, this only works 100% for Windows 10 (Versions below 21H2). Versions above 21H2 only have a "fake" kiosk environment -> It looks like a kiosk but with a few windows shortcuts you have access to the "regular" MSEdge.
 
 ## Usage
 
